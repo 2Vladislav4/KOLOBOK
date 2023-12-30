@@ -1,0 +1,21 @@
+#KOLOBOK BIRD BLUEPRINT FILE
+
+class Bird(object):
+    
+    def __init__(self,xpos, ypos, d, c, speedup, speeddown):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.d = d
+        self.c = c
+        self.speedup = speedup
+        self.speeddown = speeddown
+        
+    def display(self):
+        fill(self.c)
+        circle(self.xpos, self.ypos,self.d)
+        
+    def moveup(self):
+        self.ypos = self.ypos - self.speedup
+        
+    def movedown(self):
+        self.ypos = self.ypos + self.speeddown
