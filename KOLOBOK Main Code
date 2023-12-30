@@ -1,0 +1,457 @@
+#KOLOBOK MAIN CODE FILE
+
+from Bird import Bird
+from Tube import Tube
+
+xbackground = 0                                                             
+bg = " "                                                                     
+speed = 4                                                                    
+val = 1                                                                     
+val2 = 0  
+val3 = 0                                                                   
+n = 0 
+z = 0
+z2 = 0
+hr1 = random(200, 335)
+textik = 0
+backgroundVal = 1
+skinVal = 1
+def setup():
+    
+    global hr1, a, xr, bg, n, home, bird, tube, tubes, tubes2, bg2, bg3
+    a = 0
+    xr = 600
+    n = 0
+    bg = loadImage("flappyBackground.png")
+    bg2 = loadImage("flappyBackground2.png")
+    bg3 = loadImage("flappyBackground3.png")
+    home = loadImage("flappyBackground.png")
+    bird = Bird(200, 400, 80,"#E8BE15", 5, 2) #5, 2
+    tube = Tube(600, 0, 200, hr1, "#03A728", 4)
+    tubes = [Tube(600, 0, 200, random(200, 335), "#03A728", 4) for i in range(100)]
+    tubes2 = [Tube(600, 485, 200, random(485, 800), "#03A728", 4) for i in range(100)]
+    
+    size(800, 800)
+    
+def draw():
+    
+    global hr1, a, hr2, xr, bg, xbackground, n, val, home
+    
+    background(0)
+    
+    if val == 1:
+        scene1()
+    else:
+        scene2()
+
+def scene1():                                                                                          #LOADING SCREEN
+    
+    global hr1, xr, bg, xbackground, n, val, home, textik, bg2, backgroundVal, bg3, val3
+    
+    #loading screen
+    background("#3A96E5")
+    rectMode(CENTER)
+    rect(400, 400, 100, 50)
+    rectMode(CORNER)
+    rect(350, 450, 100, 50)
+    rect(350, 525, 100, 50)
+    fill("#1ED33D")
+    square(25, 280, 30)
+    fill("#E8BE15")
+    square(25, 320, 30)
+    fill("#FFFFFF")
+    square(25, 360, 30)
+    
+    #text & design
+    fill("#15E856")
+    rect(0, 600, 800, 300)
+    
+    textMode(CENTER)
+    textSize(95)
+    fill("#E8BE15")
+    text("KOLOBOK", 205, 150)
+    
+    textSize(50)
+    text("The Game", 300, 200)
+    
+    fill("#FFFFFF")
+    textSize(40)
+    text("Play!", 360, 410)
+    text("Info", 365, 490)
+    text("Options:", 25, 250)
+    textSize(21)
+    text("Characters", 353, 557)
+    textSize(25)
+    text("Forests & Mountains mode", 60, 305)
+    text("Desert mode", 60, 345)
+    text("Winter mode", 60, 385)
+    text("Goofy Game productions presents :", 15, 30)
+    
+    textSize(20)
+    text("- This is the best game I've ever played.", 470, 260)
+    text("Bill Gates", 470, 280)
+    text("- Thanks for adding a piece of cheese", 470, 330)
+    text("to the game.", 470, 350)
+    text("Jeff Bezos", 470, 370)
+    text("- What is a 'Ko-Lo-Bo-K'?", 470, 420)
+    text("Elon Musk", 470, 440)
+    text("- This desert background reminded me", 470, 490)
+    text("of my home.", 470, 510)
+    text("Barack Obama", 470, 530)
+    
+    fill("#E8BE15")
+    circle(125, 710, 500)
+    
+    fill("#FFFFFF")
+    circle(75, 675, 100)
+    circle(230, 675, 100)
+    
+    fill(0)
+    circle(75, 675, 25)
+    circle(230, 675, 25)
+    
+    fill("#15E856")
+    
+    if mouseX > 350 and mouseX < 450 and val3 == 0:  #PLAY BUTTON
+        if mouseY > 375 and mouseY < 425:   
+            fill("#E3092A")
+            rectMode(CENTER)
+            rect(400, 400, 100, 50)
+            fill(225)
+            textSize(40)
+            textMode(CENTER)
+            text("Play!", 360, 410)
+            fill("#15E856")
+            rectMode(CORNER)
+            if mousePressed:
+                val = -1
+
+    if mouseX > 350 and mouseX < 450 and val3 == 0:  #INFO BUTTON
+        if mouseY > 450 and mouseY < 500:  
+            fill("#E3092A")
+            rectMode(CORNER)
+            rect(350, 450, 100, 50)
+            fill(225)
+            textSize(40)
+            textMode(CENTER)
+            text("Info", 365, 490)
+            fill("#15E856")
+            rectMode(CORNER)
+            if mousePressed and textik == 0:
+                textik = 1
+                print("Main INFO: ")
+                print("'Kolobok: The Game' was designed by Goofy Games Productions in 2023. In this game")
+                print("(which is definetly not based on 'Flappy Bird') you have to avoid different obstacles")
+                print("in order to survive and gain as many points as you can. The main charcter of the game is")
+                print("Kolobok - a famous figure in slavic folklore, though he's not the only variant you can")
+                print("choose before playing this masterpiece. And yes - don't forget to select your own background,")
+                print("as we provide our players with the wide variety of possible options in order to make the")
+                print("your experience more enjoyable and relaxing. ;) ")
+                print(" ")
+                print("Settings: ")
+                print("Use the key 'W' in order to move and control your character")
+                
+    if mouseX > 350 and mouseX < 450:
+        if mouseY > 525 and mouseY < 575:  #CHARACTERS BUTTON
+            fill("#E3092A")
+            rectMode(CORNER)
+            rect(350, 525, 100, 50)
+            fill(225)
+            textSize(21)
+            textMode(CORNER)
+            text("Characters", 353, 557)
+            fill("#15E856")
+            rectMode(CORNER)
+            if mousePressed:
+                val3 = 1
+    
+    if val3 == 1:
+        scene3()
+                
+    if mouseX > 25 and mouseX < 85 and val3 == 0:  #MOUNTAINS AND FORESTS MODE
+        if mouseY > 280 and mouseY < 310: 
+            fill("#E3092A")
+            square(25, 280, 30)
+            fill("#15E856")
+            if mousePressed:
+                backgroundVal = 1
+            
+    if mouseX > 25 and mouseX < 85 and val3 == 0:  #DESERT MODE
+        if mouseY > 320 and mouseY < 350:  
+            fill("#E3092A")
+            square(25, 320, 30)
+            fill("#15E856")
+            if mousePressed:
+                backgroundVal = 2
+                
+    if mouseX > 25 and mouseX < 85 and val3 == 0:  #WINTER MODE
+        if mouseY > 360 and mouseY < 390: 
+            fill("#E3092A")
+            square(25, 360, 30)
+            fill("#15E856")
+            if mousePressed:
+                backgroundVal = 3    
+                
+    
+                
+def scene3():                                                                            #CHARACTER SCREEN
+    
+    global val, val3, skinVal
+    
+    #character screen
+    fill("#3A96E5")
+    noStroke()
+    square(0, 0, 800)
+    stroke(1)
+    fill("#FFFFFF")
+    textSize(70)
+    text("Characters:", 40, 80) 
+    textSize(30)
+    text("Kolobok", 170, 155)
+    text("Lady Kolobok", 170, 305)
+    text("Cheesehead", 170, 455)
+    fill("#15E856")
+    rect(0, 600, 800, 300)
+    
+    #SELECT BUTTON 1
+    rect(170, 175, 100, 50) 
+    textSize(35)
+    fill("#FFFFFF")
+    text("Select", 175, 210)
+    
+    if mouseX > 170 and mouseX < 270:
+        if mouseY > 175 and mouseY < 225:
+            fill("#E3092A")
+            rect(170, 175, 100, 50) 
+            textSize(35)
+            fill("#FFFFFF")
+            text("Select", 175, 210)
+            if mousePressed:
+               skinVal = 1
+    
+    #SELECT BUTTON 2
+    fill("#15E856")
+    rect(170, 325, 100, 50)
+    fill("#FFFFFF")
+    text("Select", 175, 360)
+    
+    if mouseX > 170 and mouseX < 270:
+        if mouseY > 325 and mouseY < 375:
+           fill("#E3092A")
+           rect(170, 325, 100, 50)
+           fill("#FFFFFF")
+           text("Select", 175, 360) 
+           if mousePressed:
+               skinVal = 2
+    
+    #SELECT BUTTON 3
+    fill("#15E856")
+    rect(170, 475, 100, 50)
+    fill("#FFFFFF")
+    text("Select", 175, 360+150)
+    
+    if mouseX > 170 and mouseX < 270:
+        if mouseY > 475 and mouseY < 525:
+            fill("#E3092A")
+            rect(170, 475, 100, 50)
+            fill("#FFFFFF")
+            text("Select", 175, 360+150)
+            if mousePressed:
+               skinVal = 3
+    
+    #KOLOBOK
+    fill("#E8BE15")        
+    circle(100, 180, 100)
+    fill("#FFFFFF")
+    circle(75, 175, 35)
+    circle(125, 175, 35)
+    fill(0)
+    circle(75, 175, 10)
+    circle(125, 175, 10)
+    line(85, 205, 115, 205)
+    
+    #LADY KOLOBOK
+    fill("#E8BE15")        
+    circle(100, 330, 100)
+    fill(0)
+    line(75, 325, 60, 305)
+    line(75, 325, 75, 300)
+    line(75, 325, 90, 305)
+    line(75+50, 325, 60+50, 305)
+    line(75+50, 325, 75+50, 300)
+    line(75+50, 325, 90+50, 305)
+    fill("#FFFFFF")
+    circle(75, 325, 35)
+    circle(125, 325, 35)
+    fill("#4502A5")
+    circle(75, 325, 10)
+    circle(125, 325, 10)
+    line(85, 330+25, 115, 330+25)
+    fill("#E53AC9")
+    triangle(125, 287, 100, 290, 120, 260)
+    triangle(125, 287, 95+60, 290, 120+15, 305)
+    circle(125, 287, 15)
+    
+    #CHEESE KOLOBOK
+    fill("#E8BE15")        
+    circle(100, 480, 100)
+    fill("#DEB319") #краторы   #E8BE15 #E3B719 #DEB319
+    noStroke()
+    circle(80, 450, 15)
+    circle(120, 455, 20)
+    circle(100, 460, 10)
+    circle(70, 505, 15)
+    circle(130, 505, 10)
+    
+    stroke(1)
+    fill("#FFFFFF")
+    arc(75, 325+150, 35, 35, 0, PI, PIE)
+    arc(125, 325+150, 35, 35, 0, PI, PIE)
+    fill(0)
+    arc(75, 325+150, 10, 10, 0, PI, PIE)
+    arc(125, 325+150, 10, 10, 0, PI, PIE)
+    line(60, 325+145, 90, 325+145)
+    line(60+50, 325+145, 90+50, 325+145)
+    line(85, 505, 115, 505)
+    
+    #EXIT BUTTON
+    fill("#FFFFFF")
+    square(700, 30, 50)
+    
+    if mouseX > 700 and mouseX < 750:
+        if mouseY > 30 and mouseY < 80:
+            fill("#E3092A")
+            square(700, 30, 50)
+            if mousePressed:
+                val3 = 0
+                val = 1
+
+def scene2():                                                                                        #GAME SCREEN
+    
+    global hr1, a, hr2, xr, bg, xbackground, n, val, home, bird, tube, tubes, tubes2, z2, n, z, val2, backgroundVal, skinVal
+    
+    #background
+    if backgroundVal == 1:
+        image(bg, -xbackground, 0)
+        image(bg, 800-xbackground, 0)
+        xbackground = (xbackground+speed)%800
+    if backgroundVal == 2:
+        image(bg2, -xbackground, 0)
+        image(bg2, 800-xbackground, 0)
+        xbackground = (xbackground+speed)%800
+    if backgroundVal == 3:
+        image(bg3, -xbackground, 0)
+        image(bg3, 800-xbackground, 0)
+        xbackground = (xbackground+speed)%800
+    
+    #bird
+    bird.display()
+    if keyPressed == True:
+        if key == "w":
+            if bird.ypos > 40:
+                bird.moveup()       
+    if bird.ypos < 800:
+        bird.movedown()
+    
+    if skinVal == 1:
+        fill("#D8AF16")
+        noStroke()
+        stroke(1)
+        fill("#FFFFFF")
+        circle(bird.xpos+20, bird.ypos-10, 30) #30 
+        fill(0)
+        circle(bird.xpos+30, bird.ypos-10, 10)  
+        line(bird.xpos+10, bird.ypos+15, bird.xpos+35, bird.ypos+15)
+    
+    if skinVal == 2:
+        fill("#FFFFFF")
+        circle(bird.xpos+20, bird.ypos-10, 30)  
+        fill(0)
+        circle(bird.xpos+30, bird.ypos-10, 10)  
+        line(bird.xpos+10, bird.ypos+15, bird.xpos+35, bird.ypos+15)
+        
+        fill("#4502A5")
+        circle(bird.xpos+30, bird.ypos-10, 10) 
+        fill("#E53AC9")
+        triangle(bird.xpos+10, bird.ypos-35, bird.xpos+25, bird.ypos-60, bird.xpos+40, bird.ypos-30)
+        triangle(bird.xpos+10, bird.ypos-35, bird.xpos-20, bird.ypos-60, bird.xpos-20, bird.ypos-30)
+        circle(bird.xpos+10, bird.ypos-35, 17)
+        line(bird.xpos+20-10, bird.ypos-10-10, bird.xpos+20-15, bird.ypos-10-15)
+        line(bird.xpos+20, bird.ypos-25, bird.xpos+20-15+15, bird.ypos-10-15-5)
+        line(bird.xpos+25, bird.ypos-25, bird.xpos+20+10, bird.ypos-30)
+        
+    if skinVal == 3:
+        fill("#DEB319")
+        noStroke()
+        circle(bird.xpos-10, bird.ypos-10, 15)
+        circle(bird.xpos+15, bird.ypos-15, 15)
+        circle(bird.xpos+5, bird.ypos+20, 20)
+        circle(bird.xpos-20, bird.ypos+15, 13)
+        stroke(1)
+        fill("#FFFFFF")
+        arc(bird.xpos+20, bird.ypos-10, 30, 30, 0, PI, PIE)
+        fill(0)
+        arc(bird.xpos+30, bird.ypos-10, 10, 10, 0, PI, PIE)
+        line(bird.xpos+10, bird.ypos+15, bird.xpos+35, bird.ypos+15)
+        line(bird.xpos+7, bird.ypos-17, bird.xpos+33, bird.ypos-17)
+        
+    #tubes
+    if tubes[z].xpos < -200:
+        z = int(random(100))
+        
+    tubes[z].display()
+    tubes[z].move()
+    
+    tubes2[z2].display()
+    tubes2[z2].move()
+    
+    if tubes2[z2].xpos <-200:
+        z2 = int(random(100))
+            
+    if bird.xpos+40 >= tubes[z].xpos and bird.xpos <= tubes[z].xpos+200: #upper tube
+        if bird.ypos-40 <= tubes[z].h:
+            val2 = 1
+            a = 1
+            
+    if bird.xpos+40 >= tubes2[z2].xpos and bird.xpos <= tubes2[z2].xpos+200: #lower tube     
+        if bird.ypos+40 >= tubes2[z2].ypos:
+            val2 = 1
+            a = 1
+            
+    if val2 == 1:
+        scene4()
+    
+    #time & points
+    if a == 0:
+        fill(225)
+        text(str(n), 25, 50)
+        if bird.xpos-40 == tubes[z].xpos+200:
+            n = n + 1
+        
+def scene4():                                                                                          #DEATH SCREEN
+    
+    global val, val2, val3, bird, n
+    
+    #death screen text & design
+    fill("#EA2B2B")
+    rect(0, 0, 800, 800)
+    
+    fill("#E8BE15")
+    circle(125, 710, 500)
+    
+    fill(0)
+    line(25+20, 625+20, 125-20, 725-20)
+    line(25+20, 725-20, 125-20, 625+20)
+    line(25+20+125, 625+20, 125-20+125, 725-20)
+    line(25+20+125, 725-20, 125-20+125, 625+20)
+    
+    textMode(CENTER)
+    textSize(95)       
+    text("GAME OVER", 165, 150)                 
+                              
+    textSize(50)
+    text("Try Again", 290, 200)   
+    text("Your Score: ", 400, 400)
+            
+    textSize(200)
+    text(str(n), 475, 600)
