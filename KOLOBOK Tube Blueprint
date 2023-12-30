@@ -1,0 +1,18 @@
+#KOLOBOK TUBE BLUEPRINT FILE
+
+class Tube(object):
+    
+    def __init__(self,xpos, ypos, w, h, c, speed):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.w = w
+        self.h = h
+        self.c = c
+        self.speed = speed
+        
+    def display(self):
+        fill(self.c)
+        rect(self.xpos, self.ypos, self.w, self.h)
+        
+    def move(self):
+        self.xpos = self.xpos - self.speed
